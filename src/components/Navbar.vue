@@ -1,16 +1,23 @@
 <template>
   <div>
     <v-app-bar
+      flat
       app
       dark
-      src="https://assets.tonica.la/__export/1596484155760/sites/debate/img/2020/08/03/game-pass-nuevo-look.jpg_759710130.jpg"
+      color="black"
     >
       <v-btn text to="/">
         <span>Home</span>
       </v-btn>
 
-      <v-btn text to="/Devs">
+      <v-btn text to="/devs">
         <span>Devs</span>
+      </v-btn>
+
+      <v-spacer></v-spacer>
+
+      <v-btn text to="/graph">
+        <span>Cypher Query Builder</span>
       </v-btn>
 
     </v-app-bar>

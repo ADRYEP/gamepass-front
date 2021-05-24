@@ -1,6 +1,7 @@
 <template>
   <div>
     <navbar />
+    <FloatingButton />
     <v-container fluid>
       <v-row dense>
         <v-col v-for="item in games" :key="item.title">
@@ -54,13 +55,15 @@
 
 <script>
 import Navbar from "../components/Navbar";
-import { mapState, mapActions } from "vuex";
+import FloatingButton from "../components/FloatingButton"
+import { mapState } from "vuex";
 export default {
   data: () => ({
   }),
   name: "Games",
   components: {
     Navbar,
+    FloatingButton
   },
   mounted() {
     this.$store.dispatch("getGames");
