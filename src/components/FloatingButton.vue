@@ -28,21 +28,32 @@
               </v-col>
               <v-col cols="12" sm="6">
                 <v-select
-                  :items="['0-17', '18-29', '30-54', '54+']"
+                  :items="[
+                    devs[0].name,
+                    devs[1].name,
+                    devs[2].name,
+                    devs[3].name,
+                    devs[4].name,
+                  ]"
                   label="Developer*"
                   required
                 ></v-select>
               </v-col>
               <v-col cols="12" sm="6">
                 <v-select
-                    :items=dev
+                  :items="[
+                    genres[0].name,
+                    genres[1].name,
+                    genres[2].name,
+                    genres[3].name,
+                    genres[4].name,
+                  ]"
                     label="Genre*"
                 ></v-select>
               </v-col>
             </v-row>
           </v-container>
           <small>*indicates required field</small>
-          <small>{{this.$store.state.genres}}</small>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -66,6 +77,8 @@ export default {
     dialog: false,
   }),
   mounted() {
+    this.$store.dispatch("getDevs");
+    this.$store.dispatch("getGenres");
   },
   computed: {
     ...mapState({
