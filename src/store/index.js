@@ -90,6 +90,10 @@ export default new Vuex.Store({
         async deleteGame({commit}, title){
             commit('deleteGame',title)
             await axios.delete(`http://localhost:3000/game/${title}`)
+        },
+        async createGame({commit}, payload){
+            commit('createGame',payload)
+            console.log(payload);
         }
 
     },

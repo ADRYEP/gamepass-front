@@ -60,7 +60,7 @@
           <v-btn color="blue darken-1" text @click="dialog = false">
             Close
           </v-btn>
-          <v-btn color="blue darken-1" text @click="dialog = false">
+          <v-btn color="blue darken-1" text @click="dialog = false; createGame(payload)">
             Save
           </v-btn>
         </v-card-actions>
@@ -86,6 +86,11 @@ export default {
       genres: (state) => state.genres,
     }),
   },
+  methods: {    
+    createGame(payload){
+      this.$store.dispatch('createGame', payload)
+    }
+  }
 };
 </script>
 
