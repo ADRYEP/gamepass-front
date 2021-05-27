@@ -2,7 +2,7 @@
   <div>
     <navbar />
     <FloatingButton />
-    <v-container fluid>
+    <v-container fluid class="pt-10">
       <v-row dense>
         <v-col v-for="item in games" :key="item.title">
           <v-card elevation="24" outlined class="mx-auto" max-width="344px" dark>

@@ -14,13 +14,14 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field label="Name*" v-model="newGameData.title" required></v-text-field>
+                <v-text-field color="grey darken-2" label="Name*" v-model="newGameData.title" required></v-text-field>
               </v-col>
               <v-col cols="6">
-                <v-text-field label="Image link" v-model="newGameData.cover_image" type="text"></v-text-field>
+                <v-text-field color="grey darken-2" label="Image link" v-model="newGameData.cover_image" type="text"></v-text-field>
               </v-col>
               <v-col cols="3">
                 <v-text-field
+                  color="grey darken-2"
                   label="Creation year*"
                   type="text"
                   v-model="newGameData.released"
@@ -29,6 +30,7 @@
               </v-col>
               <v-col cols="3">
                 <v-text-field
+                  color="grey darken-2"
                   label="Install Size (ADD GB after the numbers)*"
                   type="text"
                   v-model="newGameData.install_size"
@@ -37,6 +39,7 @@
               </v-col>
               <v-col cols="12" sm="6">
                 <v-select
+                  color="grey darken-2"
                   :items="devs"
                   label="Developer*"
                   v-model="newGameData.developer"
@@ -44,7 +47,8 @@
                 ></v-select>
               </v-col>
               <v-col cols="12" sm="6">
-                <v-select v-if="genres"
+                <v-select
+                  color="grey darken-2"
                   v-bind:items="genres"
                   label="Genre*"
                   v-model="newGameData.genre"
@@ -57,10 +61,10 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog = false">
+          <v-btn color="grey darken-2" text @click="dialog = false">
             Close
           </v-btn>
-          <v-btn color="blue darken-1" text @click="dialog = false; createGame()">
+          <v-btn color="grey darken-2" text @click="dialog = false; createGame()">
             Save
           </v-btn>
         </v-card-actions>

@@ -13,7 +13,8 @@ export default new Vuex.Store({
       devs: [],
       devsNames: [],
       genres: [],
-      genreNames: []
+      genreNames: [],
+      gamesByDev: []
     },
     mutations: {
         async getGames(state){
@@ -30,6 +31,8 @@ export default new Vuex.Store({
                 })
         },
         async getDevs(state){
+            state.devs = []
+            state.devsNames = []
 
             await axios.get('http://localhost:3000/developer')
                 .then((result) => {
@@ -43,6 +46,8 @@ export default new Vuex.Store({
                 })
         },
         async getGenres(state){
+            state.genres = []
+            state.genresNames = []
 
             await axios.get('http://localhost:3000/genre')
                 .then((result) => {
@@ -67,16 +72,27 @@ export default new Vuex.Store({
             state.current_game = []
 
             await axios.get(`http://localhost:3000/game/${title}`)
-            .then((result) => {
-                result.data.forEach(element => {
-                    state.current_game.push(element)
+                .then((result) => {
+                    result.data.forEach(element => {
+                        state.current_game.push(element)
+                    })
                 })
-            })
         },
-        ADD_VIDEO(state,newGame){
+        ADD_GAME(state,newGame){
             let games = state.games.concat(newGame)
             state.games = games
-        }
+        },
+        async showGamesByDev(state, name){
+            state.gamesByDev = []
+
+            axios.get(`http://localhost:3000/developer/game/${name}`)
+                .then((result) => {
+                    result.data.forEach(element => {
+                        state.gamesByDev.push(element)
+                    })
+                })
+            // console.log(state.gamesByDev);
+        },
 
     },
     actions: {        
@@ -96,6 +112,9 @@ export default new Vuex.Store({
             commit('deleteGame',title)
             await axios.delete(`http://localhost:3000/game/${title}`)
         },
+        showGamesByDev({commit},name){
+            commit('showGamesByDev', name)
+        },
         async createGame({commit}, newGameData){
 
             let newGame = {
@@ -106,20 +125,18 @@ export default new Vuex.Store({
             }
 
             await axios.post(`http://localhost:3000/game`,newGame)
-            commit('ADD_VIDEO',newGame)
+            commit('ADD_GAME',newGame)
 
             let addDev = {
                 titleGame: newGameData.title,
                 nameDev: newGameData.developer
             }
-
             await axios.post(`http://localhost:3000/game/addDev`,addDev)
 
             let addGenre = {
                 titleGame: newGameData.title,
                 nameGenre: newGameData.genre
             }
-
             await axios.post(`http://localhost:3000/game/addGenre`,addGenre)
 
         }

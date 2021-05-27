@@ -2,49 +2,57 @@
   <div>
     <navbar />
     <FloatingButton />
-    <v-container fluid>
-      <v-row dense>
-        <v-col v-for="item in games" :key="item.title">
-          <v-card elevation="24" outlined class="mx-auto" max-width="344px" dark>
-            
-            <router-link :to="{ name:'Game', params: {title: item.title}}">
-              <v-img
-                v-if="item.cover_image"
-                :src="item.cover_image"
-                width="100%"
-                height="450px"
-              ></v-img>
-              
-              <v-img
-                  v-else
-                  src="https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg"
-                  width="344px"
-                  height="450px"
-              ></v-img>
-            </router-link>
-
+    <v-container fluid class="pt-10">
+      <v-row>
+        <v-col v-for="item in devs" :key="item.name" cols="6">
+          <v-card
+            elevation="24"
+            outlined
+            class="mx-auto"
+            max-width="500px"
+            dark
+          >
             <v-card-title>
-              {{ item.title }}
+              {{ item.name }}
             </v-card-title>
 
-            <v-card-subtitle v-if="item.released.low">
-              {{ item.released.low }}
+            <v-card-subtitle>
+              <v-row>
+                <div class="col-10">
+                  <strong>{{ item.country }}</strong>
+                </div>
+                <div class="col-2">
+                  <strong>{{ item.creation_year.low }}</strong>
+                </div>
+              </v-row>
             </v-card-subtitle>
-            <v-card-subtitle v-else>
-              {{ item.released }}
-            </v-card-subtitle>
+
+            <v-spacer></v-spacer>
 
             <v-card-actions>
-              <v-spacer></v-spacer>
-
-              <v-btn icon @click="deleteGame(item.title)"
-                ><v-tooltip left>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-icon color="grey" v-bind="attrs" v-on="on"> mdi-delete </v-icon>
-                  </template>
-                  <span>Eliminar</span>
-                </v-tooltip>
-              </v-btn>
+              <v-menu bottom offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    icon
+                    class="ma-2"
+                    v-bind="attrs"
+                    v-on="on"
+                    @click="showGamesByDev(item.name)"
+                  >
+                    <v-icon>mdi-chevron-down</v-icon>
+                  </v-btn>
+                </template>
+                <v-list>
+                  <v-list-item
+                    v-for="game in gamesByDev"
+                    :key="game.title"
+                  >
+                    <router-link :to="{ name:'Game', params: {title: game.title}}" style="text-decoration: none; color: inherit;">
+                      <v-list-item-title>{{ game.title }}</v-list-item-title>
+                    </router-link>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -55,28 +63,26 @@
 
 <script>
 import Navbar from "../components/Navbar";
-import FloatingButton from "../components/FloatingButton"
+import FloatingButton from "../components/FloatingButton";
 import { mapState } from "vuex";
 export default {
-  data: () => ({
-  }),
+  data: () => ({}),
   name: "DevsComponent",
   components: {
     Navbar,
-    FloatingButton
+    FloatingButton,
   },
-  mounted() {
-    this.$store.dispatch("getGames");
-  },
+  mounted() {},
   computed: {
     ...mapState({
-      games: (state) => state.games,
+      devs: (state) => state.devs,
+      gamesByDev: (state) => state.gamesByDev
     }),
   },
   methods: {
-    deleteGame(title){
-      this.$store.dispatch('deleteGame', title)
-    }
-  }
+    showGamesByDev(name) {
+      this.$store.dispatch('showGamesByDev', name)
+    },
+  },
 };
 </script>
