@@ -4,7 +4,7 @@
       <v-container>
           <v-card elevation="24" outlined class="mx-auto" max-width="600px">
           <v-row dense>
-          <v-col cols="8">
+          <v-col cols="7">
             <v-img
                 v-if="current_game[0].cover_image"
                 :src="current_game[0].cover_image"
@@ -19,7 +19,7 @@
                   height="100%"
               ></v-img>
           </v-col>
-          <v-col cols="4">
+          <v-col cols="5">
             <v-card-title>
               {{ current_game[0].title }}
             </v-card-title>
@@ -32,7 +32,7 @@
             </v-card-subtitle>
             <v-card-subtitle v-else>
               <v-row>
-                <div class="col-7"><strong>{{ current_game[0].released.low }}</strong></div>
+                <div class="col-7"><strong>{{ current_game[0].released }}</strong></div>
                 <div class="col-5"><strong>{{ current_game[0].install_size }}</strong></div>
               </v-row>
             </v-card-subtitle>

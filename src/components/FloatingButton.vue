@@ -14,41 +14,41 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field label="Name*" required></v-text-field>
+                <v-text-field label="Name*" v-model="newGameData.title" required></v-text-field>
               </v-col>
               <v-col cols="6">
-                <v-text-field label="Image link" type="text"></v-text-field>
+                <v-text-field label="Image link" v-model="newGameData.cover_image" type="text"></v-text-field>
               </v-col>
-              <v-col cols="6">
+              <v-col cols="3">
                 <v-text-field
                   label="Creation year*"
-                  type="number"
+                  type="text"
+                  v-model="newGameData.released"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="3">
+                <v-text-field
+                  label="Install Size (ADD GB after the numbers)*"
+                  type="text"
+                  v-model="newGameData.install_size"
                   required
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6">
                 <v-select
-                  :items="[
-                    devs[0].name,
-                    devs[1].name,
-                    devs[2].name,
-                    devs[3].name,
-                    devs[4].name,
-                  ]"
+                  :items="devs"
                   label="Developer*"
+                  v-model="newGameData.developer"
                   required
                 ></v-select>
               </v-col>
               <v-col cols="12" sm="6">
-                <v-select
-                  :items="[
-                    genres[0].name,
-                    genres[1].name,
-                    genres[2].name,
-                    genres[3].name,
-                    genres[4].name,
-                  ]"
-                    label="Genre*"
+                <v-select v-if="genres"
+                  v-bind:items="genres"
+                  label="Genre*"
+                  v-model="newGameData.genre"
+                  required
                 ></v-select>
               </v-col>
             </v-row>
@@ -60,7 +60,7 @@
           <v-btn color="blue darken-1" text @click="dialog = false">
             Close
           </v-btn>
-          <v-btn color="blue darken-1" text @click="dialog = false; createGame(payload)">
+          <v-btn color="blue darken-1" text @click="dialog = false; createGame()">
             Save
           </v-btn>
         </v-card-actions>
@@ -75,6 +75,9 @@ export default {
   name: "FloatingButton",
   data: () => ({
     dialog: false,
+    newGameData: {
+      'cover_image': ''
+    }
   }),
   mounted() {
     this.$store.dispatch("getDevs");
@@ -82,13 +85,13 @@ export default {
   },
   computed: {
     ...mapState({
-      devs: (state) => state.devs,
-      genres: (state) => state.genres,
+      devs: (state) => state.devsNames,
+      genres: (state) => state.genreNames,
     }),
   },
   methods: {    
-    createGame(payload){
-      this.$store.dispatch('createGame', payload)
+    createGame(){
+      this.$store.dispatch('createGame', this.newGameData)
     }
   }
 };

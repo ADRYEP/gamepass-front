@@ -7,7 +7,7 @@
       color="black"
     >
       <v-btn text to="/">
-        <span>Home</span>
+        <span>Games</span>
       </v-btn>
 
       <v-btn text to="/devs">

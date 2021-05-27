@@ -11,7 +11,9 @@ export default new Vuex.Store({
       games: [],
       current_game: [],
       devs: [],
-      genres: []
+      devsNames: [],
+      genres: [],
+      genreNames: []
     },
     mutations: {
         async getGames(state){
@@ -26,7 +28,6 @@ export default new Vuex.Store({
                 .catch((error) => {
                     console.log(error);
                 })
-            console.log(state.games);
         },
         async getDevs(state){
 
@@ -34,12 +35,12 @@ export default new Vuex.Store({
                 .then((result) => {
                     result.data.forEach(element => {
                         state.devs.push(element)
+                        state.devsNames.push(element.name)
                     });
                 })
                 .catch((error) => {
                     console.log(error);
                 })
-            console.log(state.devs);
         },
         async getGenres(state){
 
@@ -47,6 +48,7 @@ export default new Vuex.Store({
                 .then((result) => {
                     result.data.forEach(element => {
                         state.genres.push(element)
+                        state.genreNames.push(element.name)
                     });
                 })
                 .catch((error) => {
@@ -69,8 +71,11 @@ export default new Vuex.Store({
                 result.data.forEach(element => {
                     state.current_game.push(element)
                 })
-                console.log(state.current_game);
             })
+        },
+        ADD_VIDEO(state,newGame){
+            let games = state.games.concat(newGame)
+            state.games = games
         }
 
     },
@@ -91,9 +96,32 @@ export default new Vuex.Store({
             commit('deleteGame',title)
             await axios.delete(`http://localhost:3000/game/${title}`)
         },
-        async createGame({commit}, payload){
-            commit('createGame',payload)
-            console.log(payload);
+        async createGame({commit}, newGameData){
+
+            let newGame = {
+                title: newGameData.title,
+                install_size: newGameData.install_size,
+                released: newGameData.released,
+                cover_image: newGameData.cover_image,
+            }
+
+            await axios.post(`http://localhost:3000/game`,newGame)
+            commit('ADD_VIDEO',newGame)
+
+            let addDev = {
+                titleGame: newGameData.title,
+                nameDev: newGameData.developer
+            }
+
+            await axios.post(`http://localhost:3000/game/addDev`,addDev)
+
+            let addGenre = {
+                titleGame: newGameData.title,
+                nameGenre: newGameData.genre
+            }
+
+            await axios.post(`http://localhost:3000/game/addGenre`,addGenre)
+
         }
 
     },
