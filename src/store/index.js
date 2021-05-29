@@ -14,7 +14,8 @@ export default new Vuex.Store({
       devsNames: [],
       genres: [],
       genreNames: [],
-      gamesByDev: []
+      gamesByDev: [],
+      allNodes: []
     },
     mutations: {
         async getGames(state){
@@ -91,7 +92,19 @@ export default new Vuex.Store({
                         state.gamesByDev.push(element)
                     })
                 })
-            // console.log(state.gamesByDev);
+        },
+        async getAllGraph(state){
+            state.allNodes = []
+
+            await axios.get('http://localhost:3000/game/all/Graph')
+                .then((result) => {
+                    result.data.forEach(element => {
+                        state.allNodes.push(element)
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
         },
 
     },
@@ -139,7 +152,10 @@ export default new Vuex.Store({
             }
             await axios.post(`http://localhost:3000/game/addGenre`,addGenre)
 
-        }
+        },
+        getAllGraph: context => {
+            context.commit('getAllGraph')
+        },  
 
     },
   })
