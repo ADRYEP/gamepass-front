@@ -3,7 +3,20 @@
     <navbar />
     <FloatingButton />
     <v-container fluid class="pt-10">
-      <v-row dense>
+      <v-row v-if="!games[0]">
+        <v-col>
+          <v-alert
+            color="red"
+            dense
+            elevation="11"
+            text
+            type="error"
+          >
+            No hay nodos creados! Asegúrate de haber iniciado la base dedatos
+          </v-alert>
+        </v-col>
+      </v-row>
+      <v-row dense v-else>
         <v-col v-for="item in games" :key="item.title">
           <v-card elevation="24" outlined class="mx-auto" max-width="344px" dark>
             

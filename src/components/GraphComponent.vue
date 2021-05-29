@@ -1,6 +1,7 @@
 <template>
   <div>
-    <Navbar />    
+    <Navbar />   
+     
     <v-col
       cols="12"
       sm="6"

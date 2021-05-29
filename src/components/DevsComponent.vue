@@ -3,7 +3,20 @@
     <navbar />
     <FloatingButton />
     <v-container fluid class="pt-10">
-      <v-row>
+       <v-row v-if="!devs[0]">
+        <v-col>
+          <v-alert
+            color="red"
+            dense
+            elevation="11"
+            text
+            type="error"
+          >
+            No hay nodos creados! Asegúrate de haber iniciado la base de datos
+          </v-alert>
+        </v-col>
+      </v-row>
+      <v-row v-else>
         <v-col v-for="item in devs" :key="item.name" cols="6">
           <v-card
             elevation="24"
