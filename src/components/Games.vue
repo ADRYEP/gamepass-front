@@ -12,7 +12,7 @@
             text
             type="error"
           >
-            No hay nodos creados! Asegúrate de haber iniciado la base dedatos
+            No hay nodos creados! Asegúrate de haber iniciado la base de datos
           </v-alert>
         </v-col>
       </v-row>
